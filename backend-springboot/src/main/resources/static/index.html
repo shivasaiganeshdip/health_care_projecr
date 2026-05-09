@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Heart Disease Prediction</title>
+<style>
+body{font-family:Arial;background:#f4f4f4;padding:30px;}
+.container{width:500px;margin:auto;background:white;padding:20px;border-radius:10px;}
+input{width:100%;padding:10px;margin-top:10px;}
+button{width:100%;padding:12px;margin-top:20px;background:blue;color:white;border:none;}
+#result{margin-top:20px;font-size:20px;text-align:center;}
+</style>
+</head>
+<body>
+
+<div class="container">
+<h2>Heart Disease Prediction</h2>
+
+<input type="number" id="age" placeholder="Age">
+<input type="number" id="sex" placeholder="Sex">
+<input type="number" id="cp" placeholder="Chest Pain Type">
+<input type="number" id="trestbps" placeholder="Blood Pressure">
+<input type="number" id="chol" placeholder="Cholesterol">
+<input type="number" id="fbs" placeholder="Fasting Blood Sugar">
+<input type="number" id="restecg" placeholder="Rest ECG">
+<input type="number" id="thalach" placeholder="Max Heart Rate">
+<input type="number" id="exang" placeholder="Exercise Angina">
+<input type="number" id="oldpeak" placeholder="Oldpeak">
+<input type="number" id="slope" placeholder="Slope">
+<input type="number" id="ca" placeholder="CA">
+<input type="number" id="thal" placeholder="Thal">
+
+<button onclick="predictDisease()">Predict</button>
+
+<div id="result"></div>
+
+</div>
+
+<script>
+async function predictDisease() {
+
+const features = [
+parseFloat(age.value),
+parseFloat(sex.value),
+parseFloat(cp.value),
+parseFloat(trestbps.value),
+parseFloat(chol.value),
+parseFloat(fbs.value),
+parseFloat(restecg.value),
+parseFloat(thalach.value),
+parseFloat(exang.value),
+parseFloat(oldpeak.value),
+parseFloat(slope.value),
+parseFloat(ca.value),
+parseFloat(thal.value)
+];
+
+const response = await fetch('http://localhost:5000/predict', {
+method: 'POST',
+headers: {'Content-Type': 'application/json'},
+body: JSON.stringify({features})
+});
+
+const data = await response.json();
+document.getElementById('result').innerHTML = data.prediction;
+}
+</script>
+
+</body>
+</html>
